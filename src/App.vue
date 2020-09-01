@@ -135,7 +135,6 @@ textarea {
   margin: 50px auto;
   padding: 20px;
   overflow: auto;
-  background: $tertiary-color;
   height: 100%;
 }
 </style>

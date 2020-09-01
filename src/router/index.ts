@@ -5,10 +5,10 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("@/views/Home.vue")
+    path: "/items",
+    name: "ListofItems",
+    component: () => import("@/views/ListofItems.vue")
   }
 ];
 
-export default new VueRouter({routes});
+export default new VueRouter({ routes });
