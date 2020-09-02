@@ -1,19 +1,40 @@
 <template>
   <div class="home">
-    <PageBanner :iconName="'box-seam'" :pageTitle="'List of Items'"  />
+    <PageBanner :iconName="'box-seam'" :pageTitle="'List of Items'" />
     <b-input-group size="md" class="search-item mb-2">
       <b-input-group-prepend is-text>
         <b-icon icon="search"></b-icon>
       </b-input-group-prepend>
-      <b-form-input v-model="searchItem" type="search" placeholder="Search items"></b-form-input>
+      <b-form-input
+        v-model="searchItem"
+        type="search"
+        placeholder="Search items"
+      ></b-form-input>
     </b-input-group>
-    <b-table
-      striped
-      :items="items"
-      :table-class="'item-table'"
-      :tbody-class="'item-table-body'"
-      :tbody-tr-class="'item-table-body'"
-    ></b-table>
+    <div class="tables">
+      <div>
+        <h2>All Items</h2>
+        <b-table
+          striped
+          :items="items"
+          :table-class="'item-table'"
+          show-empty
+          empty-text="No item found"
+        >
+        </b-table>
+      </div>
+      <div>
+        <h2>Low stock</h2>
+        <b-table
+          striped
+          :items="lowStockItems()"
+          :table-variant="'danger'"
+          :table-class="'low-stock-item-table'"
+          show-empty
+          empty-text="No out of stock item"
+        ></b-table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +54,7 @@ const itemStore = namespace("ItemStore");
 export default class ListofItems extends Vue {
   private searchItem: string = "";
   private items: ItemInterface[] = [];
+  private minimumStock: number = 10;
 
   @itemStore.State
   private _items!: ItemInterface[];
@@ -45,7 +67,22 @@ export default class ListofItems extends Vue {
   onSearchItemChanged(val: string) {
     const valLowerCase = val.toLowerCase();
     this.items = this._items;
-    this.items = this.items.filter(item => item.id.toString().includes(valLowerCase) || item.name.toLowerCase().includes(valLowerCase));
+    this.items = this.items.filter(
+      item =>
+        item.id.toString().includes(valLowerCase) ||
+        item.name.toLowerCase().includes(valLowerCase)
+    );
+  }
+
+  lowStockItems(): object[] {
+    return this.items
+      .filter(item => item.stock < this.minimumStock)
+      .map(({ name, stock }) => {
+        return {
+          name,
+          stock
+        };
+      });
   }
 }
 </script>
@@ -57,7 +94,19 @@ export default class ListofItems extends Vue {
   margin: 20px 0;
 }
 
+.tables {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  column-gap: 20px;
+}
+
 .item-table {
   background: $quarternary-color;
+}
+
+h2 {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>
