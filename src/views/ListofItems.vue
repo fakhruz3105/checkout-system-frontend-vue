@@ -52,9 +52,9 @@ const itemStore = namespace("ItemStore");
   }
 })
 export default class ListofItems extends Vue {
-  private searchItem: string = "";
+  private searchItem = "";
   private items: ItemInterface[] = [];
-  private minimumStock: number = 10;
+  private minimumStock = 10;
 
   @itemStore.State
   private _items!: ItemInterface[];

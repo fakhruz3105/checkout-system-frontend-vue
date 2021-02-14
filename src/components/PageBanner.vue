@@ -11,7 +11,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 @Component({})
 export default class PageBanner extends Vue {
   @Prop({ default: "search" }) readonly iconName!: string;
-  @Prop({ default: "Test" }) readonly pageTitle!: string; 
+  @Prop({ default: "Test" }) readonly pageTitle!: string;
 }
 </script>
 

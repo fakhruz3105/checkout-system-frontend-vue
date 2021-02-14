@@ -1,9 +1,4 @@
-import {
-  Module,
-  VuexModule,
-  Mutation,
-  Action
-} from "vuex-module-decorators";
+import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { ItemInterface } from "@/interface/Item.interface";
 
 @Module({
